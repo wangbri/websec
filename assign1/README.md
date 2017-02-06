@@ -30,7 +30,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='http://imgur.com/a/M69UK.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Issues with gif not appearing. Link is here: http://imgur.com/a/M69UK.gif.
+Issues with gif not appearing. Link is here: http://imgur.com/a/M69UK.
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
