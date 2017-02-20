@@ -85,19 +85,9 @@
       return $errors;
     }
 
-    date_default_timezone_set("UTC");
-    $created_at = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO states";
-    $sql .= "(name, code) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . $state['name'] . "',";
-    $sql .= "'" . $state['code'] . "'";
-    //$sql .= "'" . $state['country_id'] . "'";
-    $sql .= ");";
-
-    // For INSERT statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO states (name, code, country_id) VALUES(?, ?, ?)")) {
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $country_id);
+      $stmt->execute();
       return true;
     } else {
       // The SQL INSERT statement failed.
@@ -118,16 +108,9 @@
       return $errors;
     }
 
-    $sql = "UPDATE states SET ";
-    $sql .= "name='" . $state['name'] . "', ";
-    $sql .= "code='" . $state['code'] . "' ";
-    $sql .= "WHERE id='" . $state['id'] . "' ";
-//    $sql .= "country_id='" . $state['country_id'] . "' ";
-    $sql .= "LIMIT 1;";
-
-    // For update_state statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE states SET name=?, code=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $state['id']);
+      $stmt->execute();
       return true;
     } else {
       // The SQL UPDATE statement failed.
@@ -176,6 +159,7 @@
     $territory['name'] = mysqli_real_escape_string($db, $territory['name']);
     $territory['position'] = mysqli_real_escape_string($db, $territory['position']);
 
+   
     if (is_blank($territory['name'])) {
       $errors[] = "Name cannot be blank.";
     } elseif (!has_length($territory['name'], array('min' => 2, 'max' => 255))) {
@@ -209,19 +193,9 @@
       return $errors;
     }
 
-    date_default_timezone_set("UTC");
-    $created_at = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO territories";
-    $sql .= "(name, position, state_id) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . $territory['name'] . "',";
-    $sql .= "'" . $territory['position'] . "',";
-    $sql .= "'" . $territory['state_id'] . "'";
-    $sql .= ");";
-
-    // For INSERT statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO territories (name, position, state_id) VALUES (?, ?, ?)")) {
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $territory['state_id']);
+      $stmt->execute();
       return true;
     } else {
       // The SQL INSERT territoryment failed.
@@ -241,15 +215,10 @@
     if (!empty($errors)) {
       return $errors;
     }
-
-    $sql = "UPDATE territories SET ";
-    $sql .= "name='" . $territory['name'] . "', ";
-    $sql .= "position='" . $territory['position'] . "' ";
-    $sql .= "LIMIT 1;";
-
-    // For update_territory statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    
+    if ($stmt = mysqli_prepare($db, "INSERT INTO territories (name, position, state_id) VALUES (?, ?, ?)")) {
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $state_id);
+      $stmt->execute();
       return true;
     } else {
       // The SQL UPDATE territoryment failed.
@@ -357,20 +326,9 @@
       return $errors;
     }
 
-    date_default_timezone_set("UTC");
-    $created_at = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO salespeople";
-    $sql .= "(first_name, last_name, phone, email) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . $salesperson['first_name'] . "',";
-    $sql .= "'" . $salesperson['last_name'] . "',";
-    $sql .= "'" . $salesperson['phone'] . "',";
-    $sql .= "'" . $salesperson['email'] . "'";
-    $sql .= ");"; 
-
-    // For INSERT statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO salespeople (first_name, last_name, phone, email) VALUES (?, ?, ?, ?)")) {
+      $stmt->bind_param("ssss", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email']);
+      $stmt->execute();
       return true;
     } else {
       // The SQL INSERT statement failed.
@@ -391,17 +349,9 @@
       return $errors;
     }
 
-    $sql = "UPDATE salespeople SET ";
-    $sql .= "first_name='" . $salesperson['first_name'] . "', ";
-    $sql .= "last_name='" . $salesperson['last_name'] . "', ";
-    $sql .= "phone='" . $salesperson['phone'] . "', ";
-    $sql .= "email='" . $salesperson['email'] . "' ";
-    $sql .= "WHERE id='" . $salesperson['id'] . "' ";
-    $sql .= "LIMIT 1;";
-
-    // For update_salesperson statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE salespeople SET first_name=?, last_name=?, phone=?, email=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssssi", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email'], $salesperson['id']);
+      $stmt->execute();
       return true;
     } else {
       // The SQL UPDATE statement failed.
@@ -500,20 +450,10 @@
       return $errors;
     }
 
-    date_default_timezone_set("UTC");
-    $created_at = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO users ";
-    $sql .= "(first_name, last_name, email, username, created_at) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . $user['first_name'] . "',";
-    $sql .= "'" . $user['last_name'] . "',";
-    $sql .= "'" . $user['email'] . "',";
-    $sql .= "'" . $user['username'] . "',";
-    $sql .= "'" . $created_at . "'";
-    $sql .= ");";
-    // For INSERT statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO users (first_name, last_name, email, username, created_at) VALUES (?, ?, ?, ?, ?)")) {
+      $created_at = date("Y-m-d H:i:s");
+      $stmt->bind_param("sssss", $user['first_name'], $user['last_name'], $user['email'], $user['username'], $created_at);
+      $stmt->execute();
       return true;
     } else {
       // The SQL INSERT statement failed.
@@ -534,16 +474,9 @@
       return $errors;
     }
 
-    $sql = "UPDATE users SET ";
-    $sql .= "first_name='" . $user['first_name'] . "', ";
-    $sql .= "last_name='" . $user['last_name'] . "', ";
-    $sql .= "email='" . $user['email'] . "', ";
-    $sql .= "username='" . $user['username'] . "' ";
-    $sql .= "WHERE id='" . $user['id'] . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_user statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE users SET first_name=?, last_name=?, email=?, username=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssssi", $users['first_name'], $users['last_name'], $users['email'], $users['username'], $users['id']);
+      $stmt->execute();
       return true;
     } else {
       // The SQL UPDATE statement failed.

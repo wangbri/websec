@@ -21,6 +21,7 @@ if(is_post_request()) {
   if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
   if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
 
+  $territory['state_id'] = $end;
 
   $result = update_territory($territory);
   if($result === true) {

@@ -13,7 +13,6 @@ $errors = array();
 $territory= array(
   'name' => '',
   'position' => '',
-  'state_id' => ''
 );
 
 if(is_post_request()) {
@@ -23,6 +22,7 @@ if(is_post_request()) {
   if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
   if(isset($_POST['state_id'])) { $territory['state_id'] = $_POST['state_id']; }
 
+  echo $territory['state_id'];
 
   $result = insert_territory($territory);
   if($result === true) {
