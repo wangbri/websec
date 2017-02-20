@@ -36,7 +36,7 @@ if(is_post_request()) {
 <div id="main-content">
   <a href="show.php?id=<?php echo $end; ?>">Back to State Details</a><br />
 
- <h1>Edit Territory: <?php echo $territory['name']; ?></h1>
+ <h1>Edit Territory: <?php echo htmlspecialchars($territory['name'], ENT_QUOTES, 'UTF-8'); ?></h1>
 
   <?php echo display_errors($errors); ?>
 

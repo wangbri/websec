@@ -13,6 +13,10 @@ $errors = array();
 
 if(is_post_request()) {
 
+  foreach ($_POST as $key => $value) {
+    $value = strip_tags($value);
+  }   
+  
   // Confirm that values are present before accessing them.
   if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
   if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
@@ -34,7 +38,7 @@ if(is_post_request()) {
 <div id="main-content">
   <a href="index.php">Back to Users List</a><br />
 
-  <h1>Edit User: <?php echo $user['first_name'] . " " . $user['last_name']; ?></h1>
+  <h1>Edit User: <?php echo htmlspecialchars($user['first_name'] . " " . $user['last_name'], ENT_QUOTES, 'UTF-8'); ?></h1>
 
   <?php echo display_errors($errors); ?>
 

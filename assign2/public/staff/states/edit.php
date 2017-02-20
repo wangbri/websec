@@ -13,6 +13,10 @@ $errors = array();
   
 if(is_post_request()) {
   
+  foreach ($_POST as $key => $value) {
+    $value = strip_tags($value);
+  }   
+    
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $state['name'] = $_POST['name']; }
   if(isset($_POST['code'])) { $state['code'] = $_POST['code']; }
@@ -31,7 +35,7 @@ if(is_post_request()) {
 <div id="main-content">
   <a href="index.php">Back to States List</a><br />
 
-  <h1>Edit State: <?php echo $state['name']; ?></h1>
+  <h1>Edit State: <?php echo htmlspecialchars($state['name'], ENT_QUOTES, 'UTF-8'); ?></h1>
 
   <?php echo display_errors($errors); ?>
  

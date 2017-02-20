@@ -51,16 +51,26 @@
     $state['code'] = mysqli_real_escape_string($db, $state['code']);
 
     if (is_blank($state['name'])) {
-      $errors[] = "State name cannot be blank.";
+      $errors[] = "Name cannot be blank.";
     } elseif (!has_length($state['name'], array('min' => 4, 'max' => 255))) {
-      $errors[] = "State name cannot exceed 255 characters.";
+      $errors[] = "Name must be between 4 and 255 characters.";
+    } elseif (preg_match('/\A[A-Za-z\s]+\Z/', $state['name']) == 0) {
+      $errors[] = "Name can only contain alphabetic letters.";
     }
 
+    $state['name'] = strip_tags($state['name']);
+
     if (is_blank($state['code'])) {
-      $errors[] = "State code cannot be blank.";
+      $errors[] = "Code cannot be blank.";
     } elseif (!has_length($state['code'], array('min' => 2, 'max' => 2))) {
-      $errors[] = "State code must be 2 letters.";
+      $errors[] = "Code must be 2 letters.";
+    } elseif (preg_match('/\A[A-Za-z\s]+\Z/', $state['code']) == 0) {
+      $errors[] = "Code can only contain alphabetic letters.";
+    } elseif (preg_match('/^[^a-z]+$/', $state['code']) == 0) {
+      $errors[] = "Code can only contain capital characters."; // My custom validation
     }
+
+    $state['code'] = strip_tags($state['code']);
 
     return $errors;
   }
@@ -165,18 +175,26 @@
      
     $territory['name'] = mysqli_real_escape_string($db, $territory['name']);
     $territory['position'] = mysqli_real_escape_string($db, $territory['position']);
-   
+
     if (is_blank($territory['name'])) {
       $errors[] = "Name cannot be blank.";
     } elseif (!has_length($territory['name'], array('min' => 2, 'max' => 255))) {
       $errors[] = "Name must be between 2 and 255 characters.";
-    }
+    } elseif (preg_match('/\A[A-Za-z\s]+\Z/', $territory['name']) == 0) {
+      $errors[] = "Name can only contain alphabetic letters.";
+    } 
+    
+    $territory['name'] = strip_tags($territory['name']);
     
     if (is_blank($territory['position'])) {
-      $errors[] = "Positioncannot be blank.";
-    } elseif (!has_length($territory['position'], array('min' => 2, 'max' => 255))) {
-      $errors[] = "Position must be between 2 and 255 characters.";
-    } 
+      $errors[] = "Position cannot be blank.";
+    } elseif (!has_length($territory['position'], array('min' => 1, 'max' => 255))) {
+      $errors[] = "Position must be between 1 and 255 characters.";
+    } elseif (preg_match('/\A[0-9]+\Z/', $territory['position']) == 0) {
+      $errors[] = "Position must only contain numbers.";
+    }
+
+    $territory['position'] = strip_tags($territory['position']);
 
     return $errors;
   }
@@ -290,25 +308,41 @@
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($salesperson['first_name'], array('min' => 2, 'max' => 255))) {
       $errors[] = "First name must be between 2 and 255 characters.";
+    } elseif (preg_match('/\A[A-Za-z\'\.\s]+\Z/', $salesperson['first_name']) == 0) {
+      $errors[] = "First name must only contain alphabetic characters."; // My custom validation
     }
-   
+
+    $salesperson['first_name'] = strip_tags($salesperson['first_name']);  
+ 
     if (is_blank($salesperson['last_name'])) {
       $errors[] = "Last name cannot be blank.";
     } elseif (!has_length($salesperson['last_name'], array('min' => 2, 'max' => 255))) {
       $errors[] = "Last name must be between 2 and 255 characters.";
+    } elseif (preg_match('/\A[A-Za-z\'\.\s]+\Z/', $salesperson['last_name']) == 0) {
+      $errors[] = "Last name must only contain alphabetic characters."; // My custom validation
     }
+
+    $salesperson['last_name'] = strip_tags($salesperson['last_name']);  
       
     if (is_blank($salesperson['phone'])) {
       $errors[] = "Phone cannot be blank.";
     } elseif (!has_length($salesperson['phone'], array('min' => 2, 'max' => 255))) {
-      $errors[] = "Phone cannot exceed 255 characters.";
+      $errors[] = "Phone must be between 2 and 255 characters.";
+    } elseif (preg_match('/\d[0-9\s()-]+\Z/', $salesperson['phone']) == 0) {
+      $errors[] = "Phone must be a valid format.";
     }
+
+    $salesperson['phone'] = strip_tags($salesperson['phone']);  
 
     if (is_blank($salesperson['email'])) {
       $errors[] = "Email cannot be blank.";
+    } elseif (!has_length($salesperson['email'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Email must be between 2 and 255 characters.";
     } elseif (!has_valid_email_format($salesperson['email'])) {
       $errors[] = "Email must be a valid format.";
     }
+
+    $salesperson['email'] = strip_tags($salesperson['email']);  
 
     return $errors;
   }
@@ -427,11 +461,15 @@
       $errors[] = "First name must be between 2 and 255 characters.";
     }
 
+    $user['first_name'] = strip_tags($user['first_name']);
+
     if (is_blank($user['last_name'])) {
       $errors[] = "Last name cannot be blank.";
     } elseif (!has_length($user['last_name'], array('min' => 2, 'max' => 255))) {
       $errors[] = "Last name must be between 2 and 255 characters.";
     }
+
+    $user['last_name'] = strip_tags($user['last_name']);
 
     if (is_blank($user['email'])) {
       $errors[] = "Email cannot be blank.";
@@ -439,11 +477,16 @@
       $errors[] = "Email must be a valid format.";
     }
 
+    $user['email'] = strip_tags($user['email']);
+
     if (is_blank($user['username'])) {
       $errors[] = "Username cannot be blank.";
     } elseif (!has_length($user['username'], array('max' => 255))) {
       $errors[] = "Username must be less than 255 characters.";
     }
+
+    $user['username'] = strip_tags($user['username']);
+
     return $errors;
   }
 

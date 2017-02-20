@@ -34,7 +34,8 @@ if(is_post_request()) {
 <div id="main-content">
   <a href="index.php">Back to Salespeople List</a><br />
   
-  <h1>Edit Salesperson: <?php echo $salesperson['first_name'] . " " . $salesperson['last_name']; ?></h1>
+  <h1>Edit Salesperson: <?php echo htmlspecialchars($salesperson['first_name'] . " " . $salesperson['last_name'], ENT_QUOTES,
+                                                                                                                  'UTF-8'); ?></h1>
 
   <?php echo display_errors($errors); ?>
  
