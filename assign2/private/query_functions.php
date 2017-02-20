@@ -475,7 +475,7 @@
     }
 
     if ($stmt = mysqli_prepare($db, "UPDATE users SET first_name=?, last_name=?, email=?, username=? WHERE id=? LIMIT 1")) {
-      $stmt->bind_param("ssssi", $users['first_name'], $users['last_name'], $users['email'], $users['username'], $users['id']);
+      $stmt->bind_param("ssssi", $user['first_name'], $user['last_name'], $user['email'], $user['username'], $user['id']);
       $stmt->execute();
       return true;
     } else {
