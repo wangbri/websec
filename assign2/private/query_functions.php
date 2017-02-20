@@ -216,8 +216,8 @@
       return $errors;
     }
     
-    if ($stmt = mysqli_prepare($db, "INSERT INTO territories (name, position, state_id) VALUES (?, ?, ?)")) {
-      $stmt->bind_param("sii", $territory['name'], $territory['position'], $state_id);
+    if ($stmt = mysqli_prepare($db, "UPDATE territories SET name=?, position=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $territory['id']);
       $stmt->execute();
       return true;
     } else {
