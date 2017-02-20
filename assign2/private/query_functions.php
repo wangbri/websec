@@ -45,7 +45,22 @@
   }
 
   function validate_state($state, $errors=array()) {
-    // TODO add validations
+    global $db;
+
+    $state['name'] = mysqli_real_escape_string($db, $state['name']);
+    $state['code'] = mysqli_real_escape_string($db, $state['code']);
+
+    if (is_blank($state['name'])) {
+      $errors[] = "State name cannot be blank.";
+    } elseif (!has_length($state['name'], array('min' => 4, 'max' => 255))) {
+      $errors[] = "State name cannot exceed 255 characters.";
+    }
+
+    if (is_blank($state['code'])) {
+      $errors[] = "State code cannot be blank.";
+    } elseif (!has_length($state['code'], array('min' => 2, 'max' => 2))) {
+      $errors[] = "State code must be 2 letters.";
+    }
 
     return $errors;
   }
@@ -60,7 +75,16 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    date_default_timezone_set("UTC");
+    $created_at = date("Y-m-d H:i:s");
+    $sql = "INSERT INTO states";
+    $sql .= "(name, code) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $state['name'] . "',";
+    $sql .= "'" . $state['code'] . "'";
+    //$sql .= "'" . $state['country_id'] . "'";
+    $sql .= ");";
+
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
@@ -84,7 +108,13 @@
       return $errors;
     }
 
-    $sql = ""; // TODO add SQL
+    $sql = "UPDATE states SET ";
+    $sql .= "name='" . $state['name'] . "', ";
+    $sql .= "code='" . $state['code'] . "' ";
+    $sql .= "WHERE id='" . $state['id'] . "' ";
+//    $sql .= "country_id='" . $state['country_id'] . "' ";
+    $sql .= "LIMIT 1;";
+
     // For update_state statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
