@@ -28,7 +28,7 @@ if(is_post_request()) {
   // If there were no errors, submit data to database
   if (empty($errors)) {
 
-    $users_result = find_users_by_username($username);
+    $users_result = find_users_by_username(mysqli_real_escape_string($db, $username));
     // No loop, only one result
     $user = db_fetch_assoc($users_result);
     if($user) {
