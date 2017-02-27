@@ -11,7 +11,7 @@
     $token = csrf_token();
     $_SESSION['csrf_token'] = $token;
     $_SESSION['csrf_token_time'] = time();
-    return '<input type="hidden" name="csrf_token" value="' . $token . '" />';
+    return '<input type="hidden" name="csrf_token" value="' . $token . '">';
   }
 
   // Returns true if form token matches session token, false if not.

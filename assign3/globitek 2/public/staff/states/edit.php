@@ -12,8 +12,9 @@ $state = db_fetch_assoc($states_result);
 // Set default values for all variables the page needs.
 $errors = array();
 
-if(is_post_request() && csrf_token_is_valid() && request_is_same_domain()) {
+if(is_post_request() && csrf_token_is_valid()) {
 
+  echo "test";
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $state['name'] = $_POST['name']; }
   if(isset($_POST['code'])) { $state['code'] = $_POST['code']; }
@@ -25,8 +26,9 @@ if(is_post_request() && csrf_token_is_valid() && request_is_same_domain()) {
   } else {
     $errors = $result;
   }
-} else if (!csrf_token_is_valid()) {
-    echo "Error: invalid request";
+} else if (is_post_request() && !csrf_token_is_valid()) {
+    echo "Error: Invalid Request, redirecting back to index..";
+    sleep(3);
     redirect_to('../countries/index.php');
 }
 

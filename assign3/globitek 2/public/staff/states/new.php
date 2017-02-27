@@ -14,7 +14,7 @@ $state = array(
   'country_id' => $_GET['id']
 );
 
-if(is_post_request() && csrf_token_is_valid() && request_is_same_domain()) {
+if(is_post_request() && csrf_token_is_valid()) {
 
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $state['name'] = $_POST['name']; }
@@ -27,8 +27,9 @@ if(is_post_request() && csrf_token_is_valid() && request_is_same_domain()) {
   } else {
     $errors = $result;
   }
-} else if (!csrf_token_is_valid()) {
-  echo "Error: invalid request";
+} else if (is_post_request() && !csrf_token_is_valid()) {
+  echo "Error: Invalid Request, redirecting back to index..";
+  sleep(3);
   redirect_to('../countries/index.php');
 }
 
