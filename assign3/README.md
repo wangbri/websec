@@ -20,7 +20,7 @@ The following **required** functionality is complete:
 * [x] Require login to access area pages
 - Add a login requirement to all staff area pages where necessary
 * [x] Staff CMS for Territories
-- Confirm that the referer sent in the requests is from the same domain as the host
+- ~~Confirm that the referer sent in the requests is from the same domain as the host~~
 - Create a CSRF token
 - Store the CSRF token in the user's session
 - Add the same CSRF token to the login form as a hidden input
