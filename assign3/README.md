@@ -1,35 +1,69 @@
-# Assignment - *Week 4*
-
-Submitted by: **Brian Wang**
+# Project 4 - Forgery, Theft, and Hijacking Prevention
 
 Time spent: **2.5** hours spent in total
 
 ## User Stories
 
-The following **required** functionality is complete:
-* [x] Configure sessions
-- Only allow session IDs to come from cookies
-- Expire after one day
-- Use cookies which are marked as HttpOnly
-* [x] Login page
-- An error message for when the username is not found
-- An error message for when the username is found but the password does not match
-- After a successful login, store the user's ID in the session data (as "user_id")
-- After a successful login, store the user's last login time in the session data (as "last_login")
-- Regenerate the session ID at the appropriate point to prevent Session Fixation
-* [x] Require login to access area pages
-- Add a login requirement to all staff area pages where necessary
-* [x] Staff CMS for Territories
-- ~~Confirm that the referer sent in the requests is from the same domain as the host~~
-- Create a CSRF token
-- Store the CSRF token in the user's session
-- Add the same CSRF token to the login form as a hidden input
-- When submitted, confirm that session and form tokens match
-- If the tokens do not match, you can should show a simple error message which says "Error: invalid request" and exits
-- Make sure that legitimate use of the states/new.php and states/edit.php pages by a logged-in user still works as expected
-* [x] Ensure the application is not vulnerable to XSS attacks
-* [x] Ensure the application is not vulnerable to SQL Injection attacks
-* [x] Penetration Testing
+The following **required** functionality is completed:
+
+1\. [x]  Required: Test for initial vulnerabilities
+
+2\. [x]  Required: Configure sessions
+  * [x]  Required: Only allow session IDs to come from cookies
+  * [x]  Required: Expire after one day
+  * [x]  Required: Use cookies which are marked as HttpOnly
+
+3\. [x]  Required: Complete Login page.
+  * [x]  Required: Show an error message when username is not found.
+  * [x]  Required: Show an error message when username is found but password does not match.
+  * [x]  Required: After login, store user ID in session data.
+  * [x]  Required: After login, store user last login time in session data.
+  * [x]  Required: Regenerate the session ID at the appropriate point.
+
+4\. [x]  Required: Require login to access staff area pages.
+  * [x]  Required: Add a login requirement to *almost all* staff area pages.
+  * [x]  Required: Write code for `last_login_is_recent()`.
+
+5\. [x]  Required: Complete Logout page.
+  * [x]  Required: Add code to destroy the user's session file after logging out.
+
+6\. [x]  Required: Add CSRF protections to the state forms.
+  * [x]  Required: Create a CSRF token.
+  * [x]  Required: Add CSRF tokens to forms.
+  * [x]  Required: Compare tokens against the stored version of the token.
+  * [x]  Required: Only process forms data sent by POST requests.
+  * [x]  Required: Confirm request referer is from the same domain as the host.
+  * [x]  Required: Store the CSRF token in the user's session.
+  * [x]  Required: Add the same CSRF token to the login form as a hidden input.
+  * [x]  Required: When submitted, confirm that session and form tokens match.
+  * [x]  Required: If tokens do not match, show an error message.
+  * [x]  Required: Make sure that a logged-in user can use pages as expected.
+
+7\. [x]  Required: Ensure the application is not vulnerable to XSS attacks.
+
+8\. [x]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
+
+9\. [x]  Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
+
+
+The following advanced user stories are optional:
+
+* [ ]  Bonus Objective 1: Identify security flaw in Objective #4 (requiring login on staff pages)
+  * [ ]  Identify the security principal not being followed.
+  * [ ]  Write a short description of how the code could be modified to be more secure.
+
+* [ ] Bonus Objective 2: Add CSRF protections to all forms in the staff directory
+
+* [ ]  Bonus Objective 3: CSRF tokens only valid for 10 minutes.
+
+* [ ]  Bonus Objective 4: Sessions are valid only if user-agent string matches previous value.
+
+* [ ]  Advanced Objective: Set/Get Signed-Encrypted Cookie
+  * [ ]  Create "public/set\_secret\_cookie.php".
+  * [ ]  Create "public/get\_secret\_cookie.php".
+  * [ ]  Encrypt and sign cookie before storing.
+  * [ ]  Verify cookie is signed correctly or show error message.
+  * [ ]  Decrypt cookie.
 
 ## Video Walkthrough
 
@@ -37,7 +71,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='http://imgur.com/a/phPMd.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Issues with gif not appearing. Link is here: http://imgur.com/a/phPMd.
+GIF link here: http://imgur.com/a/phPMd.
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -46,7 +80,6 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 Describe any challenges encountered while building the app.
 
 Had issues with getting request_is_same_domain() to work as it seems that $_SERVER['HTTP_REFERER'] is not always set/sent by the user agent. Initially, I thought that this issue was probably, in some part, due to the way I've been testing the website by directly accessing the links in the browser and thus it wouldn't pass the value from page to page. However, even by navigating from the home page, the value still seems to be unset upon reaching the state/edit and state/new pages. I've disabled the check for now as I prefer to have a pushed solution that I personally can verify will work.
-
 
 ## License
 
