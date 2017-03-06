@@ -7,14 +7,19 @@
     if(!isset($_GET['id'])) {
       redirect_to('index.php');
     }
+    $agent99_result = find_agent_by_id(1);
+    $sender = db_fetch_Assoc($agent99_result);
+    $recipient_result = find_agent_by_id($_GET['id']);
+    $recipient = db_fetch_assoc($recipient_result);
 
-    // I'm sorry, did you need this code? ;)
-    // Guess you'll just have to re-write it.
-    // With love, Dark Shadow
+    $plain_text = $_POST['plain_text'];
+    $encrypted_text = pkey_encrypt($plain_text, $recipient['public_key']);
+     
+    $signature = create_signature($encrypted_text, $sender['private_key']);
     
     $message = [
       'sender_id' => $sender['id'],
-      'recipient_id' => $agent['id'],
+      'recipient_id' => $recipient['id'],
       'cipher_text' => $encrypted_text,
       'signature' => $signature
     ];
