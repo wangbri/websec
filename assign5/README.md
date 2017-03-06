@@ -1,6 +1,6 @@
 # Project 5 - Encryption
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
@@ -13,7 +13,7 @@ The following **required** functionality is completed:
   * [x]  Required: Decrypt the government message
   * [x]  Required: Encrypt a response and include in this README
   
-  1Vjettbmc0B2nUrrRfxni+3hJq/N6yCoDlY1M3v9HWBapjeiDnE5QOWslRcueqcMwAmRNJ/zw6HH73ETR8NaZKgLNpEmZmzePxMapIFsNqR2Lq/u9kIHKO8q624Bz2p2u9vVwKtvJXmieKfC0+e7YNTFZD4jruXk6hj4W45QbW8=
+1Vjettbmc0B2nUrrRfxni+3hJq/N6yCoDlY1M3v9HWBapjeiDnE5QOWslRcueqcMwAmRNJ/zw6HH73ETR8NaZKgLNpEmZmzePxMapIFsNqR2Lq/u9kIHKO8q624Bz2p2u9vVwKtvJXmieKfC0+e7YNTFZD4jruXk6hj4W45QbW8=
 
 3\. Generate Public-Private Keys
   * [x]  Required: Repair the key generator code
@@ -32,6 +32,7 @@ The following **required** functionality is completed:
   
 Message:
 IsD3O9WfC1mlwNDGt+gaU1XqupxITIQlaMnv4zfz1JY5gUpoFnxx9KETyreW3B3UrFSwZNsprMVwt89VINVEYrsPfq8vSI6tJhXXWIGwX+DgpKmGefvwqFVBoXR+9T9q1k/VcNiNo8dNAEI2fzOtPhrGUahHYg34nzCyOW7OL7N2lET9dxuE7tFonGOTPgm97My5XvvG2C9Gfd7jl8tsnTGXytXoXkS6Ze8PaChshB94BwxwymuF4mGBeIzv98bEZbyL6rP0xGDh8/81rdm0RNXya1dFHm7y1YwOmzoOoLO2ZxqzJ4fLHnMbSDgt1j7MK108vWF3n+FRqyy3ov+33g==
+
 Signature:
 IsD3O9WfC1mlwNDGt+gaU1XqupxITIQlaMnv4zfz1JY5gUpoFnxx9KETyreW3B3UrFSwZNsprMVwt89VINVEYrsPfq8vSI6tJhXXWIGwX+DgpKmGefvwqFVBoXR+9T9q1k/VcNiNo8dNAEI2fzOtPhrGUahHYg34nzCyOW7OL7N2lET9dxuE7tFonGOTPgm97My5XvvG2C9Gfd7jl8tsnTGXytXoXkS6Ze8PaChshB94BwxwymuF4mGBeIzv98bEZbyL6rP0xGDh8/81rdm0RNXya1dFHm7y1YwOmzoOoLO2ZxqzJ4fLHnMbSDgt1j7MK108vWF3n+FRqyy3ov+33g==
 
