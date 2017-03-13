@@ -27,31 +27,37 @@ if(is_post_request() && request_is_same_domain()) {
 
   if(is_blank($user['password']) || is_blank($user['password_confirmation'])) {
     $errors[] = "Password or password confirmation cannot be blank.";
+  } else if (is_blank($user['email'])) {
+    $errors[] = "Email cannot be blank.";
   }
 
   if(strcmp($user['password'],$user['password_confirmation'])) {
     $errors[] = "Password confirmation does not match password.";
   }
 
-  if(has_length($user['password']) < 12){
+  if(!has_length($user['password'], ['min' => 12])){
     $errors[] = "Password must be at least 12 characters long.";
   }
 
-  if(preg_match('/[A-Z|a-z|^A-Za-z0-9\s]/', $user['password'])) {
-    $errors[] = "Password must contain at least one uppercase letter, one lowercase letter, and one symbol.";
+  if(!preg_match('/[A-Z]/', $user['password'])) {
+    $errors[] = "Password must contain at least one uppercase letter.";
+  } else if (!preg_match('/[a-z]/', $user['password'])) {
+    $errors[] = "Password must contain at least one lowercase letter.";
+  } else if (!preg_match('/[^A-Za-z0-9\s]/', $user['password'])) {
+    $errors[] = "Password must contain at least one symbol.";
   }
 
-  if(has_valid_email_format($user['email'])) {
+  if(!has_valid_email_format($user['email'])) {
     $errors[] = "Email must be valid.";
   }
 
-  if(has_valid_username_format($user['username'])) {
+  if(!has_valid_username_format($user['username'])) {
     $errors[] = "Username must be valid";
   }
 
   if (is_blank($user['username'])) {
     $errors[] = "Username cannot be blank.";
-  } else if (is_unique_username($user['username'])) {
+  } else if (!is_unique_username($user['username'])) {
     $errors[] = "Username already exists.";
   }
 
