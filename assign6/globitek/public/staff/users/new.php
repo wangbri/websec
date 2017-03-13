@@ -25,12 +25,45 @@ if(is_post_request() && request_is_same_domain()) {
   if(isset($_POST['password'])) { $user['password'] = $_POST['password']; }
   if(isset($_POST['password_confirmation'])) { $user['password_confirmation'] = $_POST['password_confirmation']; }
 
-  $result = insert_user($user);
-  if($result === true) {
-    $new_id = db_insert_id($db);
-    redirect_to('show.php?id=' . $new_id);
-  } else {
-    $errors = $result;
+  if(is_blank($user['password']) || is_blank($user['password_confirmation'])) {
+    $errors[] = "Password or password confirmation cannot be blank.";
+  }
+
+  if(strcmp($user['password'],$user['password_confirmation'])) {
+    $errors[] = "Password confirmation does not match password.";
+  }
+
+  if(has_length($user['password']) < 12){
+    $errors[] = "Password must be at least 12 characters long.";
+  }
+
+  if(preg_match('/[A-Z|a-z|^A-Za-z0-9\s]/', $user['password'])) {
+    $errors[] = "Password must contain at least one uppercase letter, one lowercase letter, and one symbol.";
+  }
+
+  if(has_valid_email_format($user['email'])) {
+    $errors[] = "Email must be valid.";
+  }
+
+  if(has_valid_username_format($user['username'])) {
+    $errors[] = "Username must be valid";
+  }
+
+  if (is_blank($user['username'])) {
+    $errors[] = "Username cannot be blank.";
+  } else if (is_unique_username($user['username'])) {
+    $errors[] = "Username already exists.";
+  }
+
+
+  if(empty($errors)) {
+    $result = insert_user($user);
+    if($result === true) {
+      $new_id = db_insert_id($db);
+      redirect_to('show.php?id=' . $new_id);
+    } else {
+      $errors = $result;
+    }
   }
 }
 ?>
