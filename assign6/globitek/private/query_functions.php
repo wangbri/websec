@@ -553,6 +553,119 @@
     }
   }
 
+  // Add a failed attempt to the table
+  function track_attempt($user) {
+    global $db;
+
+    $errors = validate_user($user);
+    if (!empty($errors)) {
+      return $errors;
+    }
+
+    $sql = "SELECT * FROM failed_logins ";
+    $sql .= "WHERE username = '" . db_escape($db, $user['username']) . "';";
+    $users_result = db_query($db, $sql);
+    $user = db_fetch_assoc($users_result);
+
+    // username has not been previously attempted
+    if(!mysqli_num_rows($users_result)) {
+      $last_attempt = date("Y-m-d H:i:s");
+      $sql = "INSERT INTO failed_logins ";
+      $sql .= "(username, count, last_attempt) ";
+      $sql .= "VALUES (";
+      $sql .= "'" . db_escape($db, $user['username']) . "',";
+      $sql .= "'" . '1' . "',";
+      $sql .= "'" . $last_attempt . "'";
+      $sql .= ");";
+      // For INSERT statements, $result is just true/false
+      $result = db_query($db, $sql);
+
+      if($result) {
+        return true;
+      } else {
+        // The SQL INSERT statement failed.
+        // Just show the error, not the form
+        echo db_error($db);
+        db_close($db);
+        exit;
+      }
+    }
+
+      // check if attempts exceed 5
+    if($user['count'] > 5) {
+      $lockout_period = ceil((strtotime($user['last_attempt']) - time()) / 60);
+      if ($lockout_period > 0) {
+        echo "Too many failed logins for this username. You will need to wait {$lockout_period} minutes before attempting another login.";
+      } else {
+        $last_attempt = date("Y-m-d H:i:s");
+        $sql = "UPDATE failed_logins SET ";
+        #$sql .= "username='" . db_escape($db, $user['first_name']) . "', ";
+        $sql .= "count= 0,";
+        $sql .= "last_attempt='" . $last_attempt . "' ";
+        $sql .= "WHERE username='" . db_escape($db, $user['username']) . "' ";
+        $sql .= "LIMIT 1;";
+        $result = db_query($db, $sql);
+
+        if($result) {
+          return true;
+        } else {
+          // The SQL INSERT statement failed.
+          // Just show the error, not the form
+          echo db_error($db);
+          db_close($db);
+          exit;
+        }
+      }
+    } else {
+      if ($user['count'] + 1 > 5) {
+        $last_attempt = date("Y-m-d H:i:s", strtotime('+5 minutes'));
+      } else {
+        $last_attempt = date("Y-m-d H:i:s");
+      }
+      $sql = "UPDATE failed_logins SET ";
+      #$sql .= "username='" . db_escape($db, $user['first_name']) . "', ";
+      $sql .= "count= count+1,";
+      $sql .= "last_attempt='" . $last_attempt . "' ";
+      $sql .= "WHERE username='" . db_escape($db, $user['username']) . "' ";
+      $sql .= "LIMIT 1;";
+      $result = db_query($db, $sql);
+
+      if($result) {
+        return true;
+      } else {
+        // The SQL INSERT statement failed.
+        // Just show the error, not the form
+        echo db_error($db);
+        db_close($db);
+        exit;
+      }
+    }
+  }
+
+  // Refresh user attempt count on successful login
+  function refresh_count($user) {
+    global $db;
+    $last_attempt = date("Y-m-d H:i:s");
+
+    $sql = "UPDATE failed_logins SET ";
+    #$sql .= "username='" . db_escape($db, $user['first_name']) . "', ";
+    $sql .= "count= 0 ";
+    $sql .= "WHERE username='" . db_escape($db, $user['username']) . "' ";
+    $sql .= "LIMIT 1;";
+    $result = db_query($db, $sql);
+
+    if($result) {
+      return true;
+    } else {
+      // The SQL INSERT statement failed.
+      // Just show the error, not the form
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
+  }
+
+
   // Edit a user record
   // Either returns true or an array of errors
   function update_user($user) {
