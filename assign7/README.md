@@ -13,25 +13,25 @@ Time spent: **X** hours spent in total
     - Fixed in version: 4.2.3
   - [x] GIF Walkthrough: http://imgur.com/a/WGoRy
   - [x] Steps to recreate: HTML formatted around Wordpress shortcode is entered in a page or posting using the HTML edit mode (instead of the default WYSIWYG)
-  - [x] Affected source code:
+  - [x] Affected source code: wp-includes/kses.php and wp-includes/shortcodes.php
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
 2. (Required) Vulnerability Name or ID
-  - [ ] Summary: 
-    - Vulnerability types:
-    - Tested in version:
-    - Fixed in version: 
-  - [ ] GIF Walkthrough: 
-  - [ ] Steps to recreate: 
-  - [ ] Affected source code:
+  - [x] Summary: Stored Cross-Site Scripting (XSS) via Theme Name fallback
+    - Vulnerability types: Cross-site scripting (XSS)
+    - Tested in version: 4.2.2
+    - Fixed in version: 4.2.11
+  - [x] GIF Walkthrough: http://imgur.com/a/ye2Ww
+  - [x] Steps to recreate: Change file directory name of theme.zip file to "&lt;svg onload=alert(1)&gt;" and then install the theme on the website
+  - [ ] Affected source code: wp-includes/class-wp-theme.php and wp-includes/version.php
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
-3. (Required) Vulnerability Name or ID
-  - [ ] Summary: 
-    - Vulnerability types:
-    - Tested in version:
-    - Fixed in version: 
-  - [ ] GIF Walkthrough: 
-  - [ ] Steps to recreate: 
-  - [ ] Affected source code:
+3. (Required) Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+  - [x] Summary: Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+    - Vulnerability types: Cross-site scripting (XSS)
+    - Tested in version: 4.2.2
+    - Fixed in version: 4.2.13 
+  - [x] GIF Walkthrough: http://imgur.com/a/1B7WS
+  - [x] Steps to recreate: Place "[embed src='https://youtube.com/embed/12345\x3csvg onload=alert(1)\x3e'][/embed]" in a post via text edit mode (WYSIWYG)
+  - [ ] Affected source code: wp-includes/embed.php and wp-includes/version.php
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
 
 ## Assets
