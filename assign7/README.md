@@ -1,6 +1,6 @@
 # Project 7 - WordPress Pentesting
 
-Time spent: **X** hours spent in total
+Time spent: **2** hours spent in total
 
 > Objective: Find, analyze, recreate, and document **five vulnerabilities** affecting an old version of WordPress
 
@@ -15,8 +15,8 @@ Time spent: **X** hours spent in total
   - [x] Steps to recreate: HTML formatted around Wordpress shortcode is entered in a page or posting using the HTML edit mode (instead of the default WYSIWYG)
   - [x] Affected source code: wp-includes/kses.php and wp-includes/shortcodes.php
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
-2. (Required) Vulnerability Name or ID
-  - [x] Summary: Stored Cross-Site Scripting (XSS) via Theme Name fallback
+2. (Required) Stored Cross-Site Scripting (XSS) via Theme Name fallback
+  - [x] Summary: Allows remote authenticated users to inject arbitrary web script or HTML into theme file directories from untrusted sources
     - Vulnerability types: Cross-site scripting (XSS)
     - Tested in version: 4.2.2
     - Fixed in version: 4.2.11
@@ -25,7 +25,7 @@ Time spent: **X** hours spent in total
   - [ ] Affected source code: wp-includes/class-wp-theme.php and wp-includes/version.php
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
 3. (Required) Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
-  - [x] Summary: Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+  - [x] Summary: Allows users to inject arbitrary web script or HTML into YouTube URL embeds in posts
     - Vulnerability types: Cross-site scripting (XSS)
     - Tested in version: 4.2.2
     - Fixed in version: 4.2.13 
